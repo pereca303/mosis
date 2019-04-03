@@ -5,4 +5,6 @@
     <string name="third_menu_item">Third item</string>
     <string name="about_text">Some text for about page</string>
     <string name="about_button">Click me</string>
+    <string name="DataFirstOption">First option</string>
+    <string name="DataSecondOption">Second option</string>
 </resources>

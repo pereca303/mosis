@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:orientation="vertical" android:background="@drawable/item_border_background">
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Item name" />
+
+    <TextView
+        android:id="@+id/item_description"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#edf2fc"
+        android:fontFamily="sans-serif-light"
+        android:text="Some item description" />
+
+</LinearLayout>

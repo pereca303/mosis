@@ -5,16 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="top|center"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/custom_toolbar"
+        android:id="@+id/data_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:elevation="10dp"
-        android:background="@android:color/holo_blue_dark">
-    </android.support.v7.widget.Toolbar>
+        android:title="Data preview"></android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,17 +19,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/elfak" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/pin" />
+        <ListView
+            android:id="@+id/data_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></ListView>
 
     </LinearLayout>
+
 
 </LinearLayout>

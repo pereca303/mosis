@@ -21,15 +21,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        this.getViews();
+        this.initViews();
         this.initMenuTasks();
         
     }
     
-    private void getViews() {
+    private void initViews() {
         
         this.setSupportActionBar((Toolbar) this.findViewById(R.id.custom_toolbar));
-        
         ((Toolbar) findViewById(R.id.custom_toolbar)).inflateMenu(R.menu.toolbar_items);
         
     }
@@ -45,9 +44,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean execute(MenuItem selected_item) {
                 
+                // go to about activity, show about page
                 Intent about_page=new Intent(MainActivity.this,AboutActivity.class);
                 startActivity(about_page);
                 
+                // true means that the event is handled
+                return true;
+            }
+        });
+    
+        this.menu_tasks.put(R.id.second_item, new MenuTask() {
+        
+            @Override
+            public boolean execute(MenuItem selected_item) {
+            
+                // go to about activity, show about page
+                Intent data_page=new Intent(MainActivity.this,DataActivity.class);
+                startActivity(data_page);
+            
                 // true means that the event is handled
                 return true;
             }
