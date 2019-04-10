@@ -2,6 +2,7 @@ package lab.mosis.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class DataActivity extends AppCompatActivity {
     private int selected_index = -1;
 
     private int ADD_ACTIVITY_CODE = 123;
+    private int EDIT_ACTIVITY_CODE = 312;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,18 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
+        this.menu_tasks.put(R.id.data_third_idem, new MenuTask() {
+            @Override
+            public boolean execute(MenuItem selected_item) {
+
+                Intent intent = new Intent(DataActivity.this, EditActivity.class);
+                intent.putExtra("place_index", selected_index);
+                startActivityForResult(intent, EDIT_ACTIVITY_CODE);
+
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -95,6 +109,16 @@ public class DataActivity extends AppCompatActivity {
                 Toast.makeText(this, "Mathicng result", Toast.LENGTH_SHORT).show();
 
                 this.adapter.notifyDataSetChanged();
+            }
+
+        } else if (requestCode == this.EDIT_ACTIVITY_CODE) {
+
+            if (resultCode == Activity.RESULT_OK) {
+
+                Toast.makeText(this, "Place change", Toast.LENGTH_SHORT).show();
+
+                this.adapter.notifyDataSetChanged();
+
             }
 
         }
