@@ -3,8 +3,12 @@
     <string name="first_menu_item">First item</string>
     <string name="second_menu_item">Second item</string>
     <string name="third_menu_item">Third item</string>
+
     <string name="about_text">Some text for about page</string>
-    <string name="about_button">Click me</string>
+    <string name="about_button">Back to main page</string>
+
     <string name="DataFirstOption">First option</string>
     <string name="DataSecondOption">Second option</string>
+    <string name="PlaceNameEdit">Place name</string>
+    <string name="PlaceDescriptionEdit">Place description</string>
 </resources>

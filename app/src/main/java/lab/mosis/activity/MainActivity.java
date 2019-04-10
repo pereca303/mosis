@@ -1,4 +1,4 @@
-package lab.mosis;
+package lab.mosis.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import lab.mosis.MenuTask;
+import lab.mosis.R;
 
 public class MainActivity extends AppCompatActivity {
     
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         
         this.setSupportActionBar((Toolbar) this.findViewById(R.id.custom_toolbar));
-        ((Toolbar) findViewById(R.id.custom_toolbar)).inflateMenu(R.menu.toolbar_items);
+        ((Toolbar) findViewById(R.id.custom_toolbar)).inflateMenu(R.menu.main_toolbar_items);
         
     }
     
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
-        this.getMenuInflater().inflate(R.menu.toolbar_items, menu);
+        this.getMenuInflater().inflate(R.menu.main_toolbar_items, menu);
         
         return true;
         

@@ -7,32 +7,34 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MyAdapter extends ArrayAdapter<MyPlace> {
-    
+
     private Context context;
-    private MyPlace[] data_source;
-    
-    public MyAdapter(Context context, int resource, MyPlace[] objects) {
+    private List<MyPlace> data_source;
+
+    public MyAdapter(Context context, int resource, List<MyPlace> objects) {
         super(context, resource, objects);
-        
+
         this.context = context;
-        this.data_source=objects;
+        this.data_source = objects;
     }
-    
+
     public View getView(int pos, View old_view, ViewGroup parent) {
-        
+
         // reuse old view if possible
         if (old_view == null) {
-            old_view = (LayoutInflater.from(this.context)).inflate(R.layout.list_item,parent,false);
+            old_view = (LayoutInflater.from(this.context)).inflate(R.layout.list_item, parent, false);
         }
-        
+
         // get item model from data source
-        MyPlace target_place=this.data_source[pos];
+        MyPlace target_place = this.data_source.get(pos);
         // populate view with model data
         ((TextView) old_view.findViewById(R.id.item_name)).setText(target_place.getName());
         ((TextView) old_view.findViewById(R.id.item_description)).setText(target_place.getDescription());
-        
+
         return old_view;
     }
-    
+
 }

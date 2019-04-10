@@ -13,14 +13,7 @@
         android:id="@+id/second_item"
         android:icon="@drawable/ic_action_map"
         android:title="@string/second_menu_item"
-        app:showAsAction="ifRoom"
-        ></item>
-
-    <item
-        android:icon="@drawable/ic_action_view_as_list"
-        android:id="@+id/third_item"
-        android:title="@string/third_menu_item"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         ></item>
 
 </menu>

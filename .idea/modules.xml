@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///media/pereca/workspace/android_studio/MOSIS/MOSIS.iml" filepath="/media/pereca/workspace/android_studio/MOSIS/MOSIS.iml" />
-      <module fileurl="file:///media/pereca/workspace/android_studio/MOSIS/app/app.iml" filepath="/media/pereca/workspace/android_studio/MOSIS/app/app.iml" />
+      <module fileurl="file:///media/pereca/workspace/android/mosis/app/app.iml" filepath="/media/pereca/workspace/android/mosis/app/app.iml" />
+      <module fileurl="file:///media/pereca/workspace/android/mosis/mosis.iml" filepath="/media/pereca/workspace/android/mosis/mosis.iml" />
     </modules>
   </component>
 </project>
