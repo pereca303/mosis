@@ -60,12 +60,12 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
-        this.menu_tasks.put(R.id.data_second_idem, new MenuTask() {
+        this.menu_tasks.put(R.id.data_second_item, new MenuTask() {
             @Override
             public boolean execute(MenuItem selected_item) {
 
                 if (selected_index > -1) {
-                    
+
                     Intent intent = new Intent(DataActivity.this, PlaceInfoActivity.class);
                     intent.putExtra("place_index", selected_index);
                     startActivity(intent);
@@ -78,7 +78,7 @@ public class DataActivity extends AppCompatActivity {
             }
         });
 
-        this.menu_tasks.put(R.id.data_third_idem, new MenuTask() {
+        this.menu_tasks.put(R.id.data_third_item, new MenuTask() {
             @Override
             public boolean execute(MenuItem selected_item) {
 
@@ -91,6 +91,19 @@ public class DataActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Select some item first ... ", Toast.LENGTH_SHORT).show();
                 }
+
+                return true;
+            }
+        });
+
+        this.menu_tasks.put(R.id.data_fourth_item, new MenuTask() {
+            @Override
+            public boolean execute(MenuItem selected_item) {
+
+                Intent map_intent = new Intent(DataActivity.this, MapActivity.class);
+                map_intent.putExtra("map_context", String.valueOf(MapContext.ShowAllPlaces));
+
+                startActivity(map_intent);
 
                 return true;
             }

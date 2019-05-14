@@ -58,9 +58,9 @@ public class EditActivity extends AppCompatActivity {
 
                 Intent map_intent = new Intent(EditActivity.this, MapActivity.class);
 
-                map_intent.putExtra("map_context", MapContext.EditMyPlace);
-                map_intent.putExtra("longitude", longitude_edit.getText().toString());
-                map_intent.putExtra("latitude", latitude_edit.getText().toString());
+                map_intent.putExtra("map_context", String.valueOf(MapContext.EditMyPlace));
+                map_intent.putExtra("longitude", Double.parseDouble(longitude_edit.getText().toString()));
+                map_intent.putExtra("latitude", Double.parseDouble(latitude_edit.getText().toString()));
 
                 startActivityForResult(map_intent, MAP_ACTIVITY_CODE);
 

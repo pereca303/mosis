@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,16 +22,25 @@ import android.widget.Toast;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.MapEventsOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.lang.reflect.GenericArrayType;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lab.mosis.MenuTask;
 import lab.mosis.R;
+import lab.mosis.data.DataStorage;
+import lab.mosis.data.MyPlace;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -42,6 +54,9 @@ public class MapActivity extends AppCompatActivity {
     private Map<Integer, MenuTask> menu_tasks;
 
     private Map<MapContext, InitializeTask> initialize_task_map;
+
+    private double selected_longitude;
+    private double selected_latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +81,11 @@ public class MapActivity extends AppCompatActivity {
 
         this.initMap();
 
-//        InitializeTask init_task = this.initialize_task_map.get(map_context);
-//        init_task.execute(intent);
+        this.selected_latitude = -1;
+        this.selected_longitude = -1;
+
+        InitializeTask init_task = this.initialize_task_map.get(map_context);
+        init_task.execute(intent);
 
     }
 
@@ -94,21 +112,54 @@ public class MapActivity extends AppCompatActivity {
                 // edit button icon ...
                 map_button.setBackgroundResource(R.drawable.ic_action_view_as_list);
 
+                double passed_long = intent.getDoubleExtra("longitude", -1);
+                double passed_lat = intent.getDoubleExtra("latitude", -1);
+
+                Toast.makeText(getApplicationContext(),
+                               "logn: " + passed_long + " lat: " + passed_lat,
+                               Toast.LENGTH_SHORT).show();
+
+                map_controller.setZoom(15.0);
+                GeoPoint point = new GeoPoint(passed_lat, passed_long);
+                map_controller.setCenter(point);
+
+                MapEventsReceiver mapEventRecv = new MapEventsReceiver() {
+                    @Override
+                    public boolean singleTapConfirmedHelper(GeoPoint p) {
+
+                        selected_latitude = p.getLatitude();
+                        selected_longitude = p.getLatitude();
+
+                        map_controller.setCenter(p);
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean longPressHelper(GeoPoint p) {
+                        return false;
+                    }
+                };
+
+                MapEventsOverlay event_overlay = new MapEventsOverlay(mapEventRecv);
+                map_view.getOverlays().add(event_overlay);
+
                 map_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        double passed_long = intent.getDoubleExtra("longitude", -1);
-                        double passed_lat = intent.getDoubleExtra("latitude", -1);
+                        Intent info_intent = new Intent();
+                        if (selected_latitude != -1 && selected_longitude != -1) {
 
-                        // same as for addMyPlace (just set click listener on button to return selected long and lat ... );
-                        initialize_task_map.get(MapContext.AddMyPlace);
+                            info_intent.putExtra("longitude", selected_longitude);
+                            info_intent.putExtra("latitude", selected_latitude);
 
-                        // focus passed location
+                            setResult(Activity.RESULT_OK, info_intent);
+                            finish();
 
-                        map_controller.setZoom(15.0);
-                        GeoPoint point = new GeoPoint(passed_lat, passed_long);
-                        map_controller.setCenter(point);
+                        } else {
+                            Toast.makeText(MapActivity.this, "Select location first ... ", Toast.LENGTH_SHORT).show();
+                        }
 
 
                     }
@@ -123,21 +174,45 @@ public class MapActivity extends AppCompatActivity {
 
                 map_button.setBackgroundResource(R.drawable.ic_action_new);
 
+                MapEventsReceiver mapEventRecv = new MapEventsReceiver() {
+                    @Override
+                    public boolean singleTapConfirmedHelper(GeoPoint p) {
+
+                        Toast.makeText(getApplicationContext(), "Map click ", Toast.LENGTH_SHORT).show();
+
+                        selected_latitude = p.getLatitude();
+                        selected_longitude = p.getLatitude();
+
+                        map_controller.setCenter(p);
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean longPressHelper(GeoPoint p) {
+                        return false;
+                    }
+                };
+
+                MapEventsOverlay event_overlay = new MapEventsOverlay(mapEventRecv);
+                map_view.getOverlays().add(event_overlay);
+
                 map_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        // collect data from map
-                        // populate intent with it
-                        // finish activity
                         Intent info_intent = new Intent();
+                        if (selected_latitude != -1 && selected_longitude != -1) {
 
-                        // TODO get longitude and latitude from selected place somehow
-                        info_intent.putExtra("longitude", 1.1);
-                        info_intent.putExtra("latitude", 1.1);
+                            info_intent.putExtra("longitude", selected_longitude);
+                            info_intent.putExtra("latitude", selected_latitude);
 
-                        setResult(Activity.RESULT_OK, info_intent);
-                        finish();
+                            setResult(Activity.RESULT_OK, info_intent);
+                            finish();
+
+                        } else {
+                            Toast.makeText(MapActivity.this, "Select location first ... ", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });
@@ -161,7 +236,65 @@ public class MapActivity extends AppCompatActivity {
 
         this.initialize_task_map.put(MapContext.ShowAllPlaces, new InitializeTask() {
             @Override
-            public void execute(Intent intent) {
+            public void execute(final Intent intent) {
+
+                List<OverlayItem> items = new ArrayList<OverlayItem>();
+
+                for (MyPlace place : DataStorage.getInstance().getData()) {
+
+                    OverlayItem item = new OverlayItem(place.getName(),
+                                                       place.getDescription(),
+                                                       new GeoPoint(place.getLatitude(), place.getLongitude()));
+
+
+                    item.setMarker(getResources().getDrawable(R.drawable.myplace32));
+                    ((ArrayList) items).add(item);
+
+                }
+
+                ItemizedIconOverlay<OverlayItem> itemized_overlay = new ItemizedIconOverlay<OverlayItem>(items,
+                                                                                                         new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                                                                                                             @Override
+                                                                                                             public boolean onItemSingleTapUp(
+                                                                                                                     int index,
+                                                                                                                     OverlayItem item) {
+
+                                                                                                                 Intent intent = new Intent(
+                                                                                                                         MapActivity.this,
+                                                                                                                         PlaceInfoActivity.class);
+
+                                                                                                                 intent.putExtra(
+                                                                                                                         "place_index",
+                                                                                                                         index);
+
+                                                                                                                 startActivity(
+                                                                                                                         intent);
+
+                                                                                                                 return true;
+                                                                                                             }
+
+                                                                                                             @Override
+                                                                                                             public boolean onItemLongPress(
+                                                                                                                     int index,
+                                                                                                                     OverlayItem item) {
+                                                                                                                 Intent intent = new Intent(
+                                                                                                                         MapActivity.this,
+                                                                                                                         EditActivity.class);
+
+                                                                                                                 intent.putExtra(
+                                                                                                                         "place_index",
+                                                                                                                         index);
+
+                                                                                                                 startActivity(
+                                                                                                                         intent);
+
+
+                                                                                                                 return true;
+                                                                                                             }
+                                                                                                         },
+                                                                                                         getApplicationContext());
+
+                map_view.getOverlays().add(itemized_overlay);
 
             }
         });
@@ -172,10 +305,17 @@ public class MapActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Set overlay ", Toast.LENGTH_SHORT).show();
 
-                location_overlay = new MyLocationNewOverlay(new GpsMyLocationProvider(getApplicationContext()),
-                                                            map_view);
-                location_overlay.enableMyLocation();
+                location_overlay = new MyLocationNewOverlay(map_view);
                 location_overlay.enableFollowLocation();
+                location_overlay.enableMyLocation();
+
+                Drawable icon_draw = ResourcesCompat.getDrawable(getResources(), R.drawable.myplace32, null);
+
+                if (icon_draw != null) {
+
+                    location_overlay.setPersonIcon(((BitmapDrawable) icon_draw).getBitmap());
+
+                }
 
                 map_view.getOverlays().add(location_overlay);
 
@@ -221,14 +361,6 @@ public class MapActivity extends AppCompatActivity {
                                               MapActivity.PERMISSION_ACCESS_FINE_LOCATION);
 
         }
-
-//        if (this.map_controller != null) {
-//
-//            this.map_controller.setZoom(15.0);
-//            GeoPoint point = new GeoPoint(MapActivity.NIS_LATITUDE, MapActivity.NIS_LONGITUDE);
-//            this.map_controller.setCenter(point);
-//
-//        }
 
     }
 

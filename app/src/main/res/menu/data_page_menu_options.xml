@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/data_first_item"
@@ -9,15 +9,20 @@
         app:showAsAction="always"></item>
 
     <item
-        android:id="@+id/data_second_idem"
+        android:id="@+id/data_second_item"
         android:icon="@drawable/ic_action_about"
         android:title="@string/DataSecondOption"
         app:showAsAction="always"></item>
 
     <item
-        android:id="@+id/data_third_idem"
+        android:id="@+id/data_third_item"
         android:icon="@drawable/ic_action_view_as_list"
         android:title="@string/DataSecondOption"
+        app:showAsAction="always"></item>
+
+    <item
+        android:id="@+id/data_fourth_item"
+        android:icon="@drawable/ic_action_map"
         app:showAsAction="always"></item>
 
 </menu>

@@ -15,8 +15,8 @@ public class DataStorage {
 
         // TODO fake initialization
 
-        this.data.add(new MyPlace("First name", "First description", 166.39115, -30.52477));
-        this.data.add(new MyPlace("Second name", "Second description", -45.42354, 6.90155));
+        this.data.add(new MyPlace("First name", "First description", 14.210938, 42.036239));
+        this.data.add(new MyPlace("Second name", "Second description", 9.379082, 51.071778));
 
     }
 
