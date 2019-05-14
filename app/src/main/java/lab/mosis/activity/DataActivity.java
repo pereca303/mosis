@@ -2,7 +2,6 @@ package lab.mosis.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lab.mosis.MenuTask;
-import lab.mosis.MyAdapter;
+import lab.mosis.MyPlaceAdapter;
 import lab.mosis.R;
 import lab.mosis.data.DataStorage;
 
@@ -26,7 +25,7 @@ public class DataActivity extends AppCompatActivity {
 
     private Map<Integer, MenuTask> menu_tasks;
 
-    private MyAdapter adapter;
+    private MyPlaceAdapter adapter;
 
     private int selected_index = -1;
 
@@ -65,9 +64,15 @@ public class DataActivity extends AppCompatActivity {
             @Override
             public boolean execute(MenuItem selected_item) {
 
-                Intent intent = new Intent(DataActivity.this, PlaceInfoActivity.class);
-                intent.putExtra("place_index", selected_index);
-                startActivity(intent);
+                if (selected_index > -1) {
+                    
+                    Intent intent = new Intent(DataActivity.this, PlaceInfoActivity.class);
+                    intent.putExtra("place_index", selected_index);
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select some item first ... ", Toast.LENGTH_SHORT).show();
+                }
 
                 return true;
             }
@@ -77,9 +82,15 @@ public class DataActivity extends AppCompatActivity {
             @Override
             public boolean execute(MenuItem selected_item) {
 
-                Intent intent = new Intent(DataActivity.this, EditActivity.class);
-                intent.putExtra("place_index", selected_index);
-                startActivityForResult(intent, EDIT_ACTIVITY_CODE);
+                if (selected_index > -1) {
+
+                    Intent intent = new Intent(DataActivity.this, EditActivity.class);
+                    intent.putExtra("place_index", selected_index);
+                    startActivityForResult(intent, EDIT_ACTIVITY_CODE);
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select some item first ... ", Toast.LENGTH_SHORT).show();
+                }
 
                 return true;
             }
@@ -161,7 +172,7 @@ public class DataActivity extends AppCompatActivity {
 
     private void initDataSource() {
 
-        this.adapter = new MyAdapter(this, R.layout.list_item, DataStorage.getInstance().getData());
+        this.adapter = new MyPlaceAdapter(this, R.layout.list_item, DataStorage.getInstance().getData());
 
         ((ListView) findViewById(R.id.data_container)).setAdapter(this.adapter);
 

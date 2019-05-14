@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import lab.mosis.MyPlace;
+import org.w3c.dom.Text;
+
 import lab.mosis.R;
 import lab.mosis.data.DataStorage;
+import lab.mosis.data.MyPlace;
 
 public class PlaceInfoActivity extends AppCompatActivity {
 
@@ -32,6 +34,8 @@ public class PlaceInfoActivity extends AppCompatActivity {
 
         ((TextView) this.findViewById(R.id.place_name_tv)).setText(target_place.getName());
         ((TextView) this.findViewById(R.id.place_description_tv)).setText(target_place.getDescription());
+        ((TextView) this.findViewById(R.id.long_info_tv)).setText(String.valueOf(target_place.getLongitude()));
+        ((TextView) this.findViewById(R.id.lat_info_tv)).setText(String.valueOf(target_place.getLatitude()));
 
         ((Button) this.findViewById(R.id.back_place_info)).setOnClickListener(new View.OnClickListener() {
             @Override

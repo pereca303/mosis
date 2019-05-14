@@ -9,12 +9,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MyAdapter extends ArrayAdapter<MyPlace> {
+import lab.mosis.data.MyPlace;
+
+public class MyPlaceAdapter extends ArrayAdapter<MyPlace> {
 
     private Context context;
     private List<MyPlace> data_source;
 
-    public MyAdapter(Context context, int resource, List<MyPlace> objects) {
+    public MyPlaceAdapter(Context context, int resource, List<MyPlace> objects) {
         super(context, resource, objects);
 
         this.context = context;
@@ -33,6 +35,9 @@ public class MyAdapter extends ArrayAdapter<MyPlace> {
         // populate view with model data
         ((TextView) old_view.findViewById(R.id.item_name)).setText(target_place.getName());
         ((TextView) old_view.findViewById(R.id.item_description)).setText(target_place.getDescription());
+        ((TextView) old_view.findViewById(R.id.long_tv)).setText(String.valueOf(target_place.getLongitude()));
+        ((TextView) old_view.findViewById(R.id.lat_tv)).setText(String.valueOf((target_place.getLatitude())));
+
 
         return old_view;
     }

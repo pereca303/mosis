@@ -3,8 +3,6 @@ package lab.mosis.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import lab.mosis.MyPlace;
-
 public class DataStorage {
 
     private static DataStorage instance;
@@ -17,8 +15,8 @@ public class DataStorage {
 
         // TODO fake initialization
 
-        this.data.add(new MyPlace("First name", "First decription"));
-        this.data.add(new MyPlace("Second name", "Second decription"));
+        this.data.add(new MyPlace("First name", "First description", 166.39115, -30.52477));
+        this.data.add(new MyPlace("Second name", "Second description", -45.42354, 6.90155));
 
     }
 

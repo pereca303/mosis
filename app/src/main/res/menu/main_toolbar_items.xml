@@ -4,16 +4,14 @@
 
     <item
         android:id="@+id/first_item"
-        android:title="@string/first_menu_item"
         android:icon="@drawable/ic_action_about"
-        app:showAsAction="always"
-        ></item>
+        android:title="@string/first_menu_item"
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/second_item"
-        android:icon="@drawable/ic_action_map"
+        android:icon="@drawable/ic_action_view_as_list"
         android:title="@string/second_menu_item"
-        app:showAsAction="always"
-        ></item>
+        app:showAsAction="always"></item>
 
 </menu>
