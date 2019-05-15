@@ -1,17 +1,24 @@
 package lab.mosis.data;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class MyPlace {
 
     private long ID;
 
-    private String name;
-    private String description;
+    public String name;
+    public String description;
 
-    private double longitude;
-    private double latitude;
+    public double longitude;
+    public double latitude;
 
-    // what ? ...
-    private float filename;
+    @Exclude
+    public String key;
+
+    public MyPlace(){}
+
 
     public MyPlace(String name, String description, double longitude, double latitude) {
 
@@ -67,11 +74,4 @@ public class MyPlace {
         this.latitude = latitude;
     }
 
-    public double getFilename() {
-        return filename;
-    }
-
-    public void setFilename(float filename) {
-        this.filename = filename;
-    }
 }
